@@ -1,0 +1,7 @@
+.ipynb_checkpoints
+.idea
+*.py[cod]
+venv
+__pycache__
+.env
+*.crt

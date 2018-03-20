@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  bot:
+    build: src
+    image: thatmusicbot
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - '${CONTAINER_PORT}:8000'
