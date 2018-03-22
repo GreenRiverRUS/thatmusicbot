@@ -78,6 +78,10 @@ class BotHandler(api.BotHookHandler):
         else:
             await client.send_message(user_id, NO_COMMAND)
 
+    @staticmethod
+    def format_duration(duration: int):
+        return '{}:{:02d}'.format(duration // 60, duration % 60)
+
     async def on_inline_query(self, inline_query: types.InlineQuery) -> None:
         client = self.settings['agent'].client  # type: api.BotClient
         logging.info('Inline query from {}: {}'.format(
@@ -94,7 +98,9 @@ class BotHandler(api.BotHookHandler):
                     id_=uuid4().hex,
                     audio_url=audio['download'],
                     title=audio['title'],
-                    performer=audio['artist'],
+                    performer='{} · {}'.format(
+                        audio['artist'], self.format_duration(audio['duration'])
+                    ),
                     audio_duration=audio['duration']
                 )
             )
