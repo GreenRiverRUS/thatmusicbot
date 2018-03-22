@@ -47,11 +47,12 @@ class BotHandler(api.BotHookHandler):
         return self._bot_name
 
     async def search(self, query: str, limit: int = 50):
-        async with aiohttp.request(
-                method='GET',
+        async with aiohttp.ClientSession() as session:
+            async with session.get(
                 url=self.settings['api_endpoint'],
-                params={'q': query}) as response:
-            result = (await response.json())['data']
+                params={'q': query}
+            ) as response:
+                result = (await response.json())['data']
 
         return result[:limit]
 
@@ -91,14 +92,14 @@ class BotHandler(api.BotHookHandler):
             results.append(
                 types.InlineQueryResultAudio(
                     id_=uuid4().hex,
-                    audio_url=audio['stream'],
+                    audio_url=audio['download'],
                     title=audio['title'],
                     performer=audio['artist'],
                     audio_duration=audio['duration']
                 )
             )
 
-        logging.debug(results)
+        # logging.debug(results)
 
         await client.answer_inline_query(
             inline_query.id_,
