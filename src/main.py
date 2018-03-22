@@ -10,7 +10,7 @@ from wcpan.telegram import api, types
 
 from constants import ABOUT_TEXT, START_TEXT, NO_COMMAND
 
-INLINE_QUERY_CACHE_TIME = 30  # * 24 * 60 * 60  # 1 month
+INLINE_QUERY_CACHE_TIME = 24 * 60 * 60  # * 30 # 1 month
 INLINE_QUERY_POPULAR_CACHE_TIME = 24 * 60 * 60  # 1 day
 logging.basicConfig(format='{levelname:8s} [{asctime}] {message}', style='{', level=logging.DEBUG)
 
@@ -101,10 +101,16 @@ class BotHandler(api.BotHookHandler):
 
         # logging.debug(results)
 
+        if len(query):
+            cache_time = INLINE_QUERY_CACHE_TIME
+        else:
+            cache_time = INLINE_QUERY_POPULAR_CACHE_TIME
+        logging.debug('Cache time: {}'.format(cache_time))
+
         await client.answer_inline_query(
             inline_query.id_,
             results,
-            cache_time=INLINE_QUERY_CACHE_TIME if query else INLINE_QUERY_POPULAR_CACHE_TIME,
+            cache_time=cache_time,
             is_personal=False
         )
 
