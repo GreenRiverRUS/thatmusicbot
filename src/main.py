@@ -10,8 +10,8 @@ from wcpan.telegram import api, types
 
 from constants import ABOUT_TEXT, START_TEXT, NO_COMMAND
 
-INLINE_QUERY_CACHE_TIME = 24 * 60 * 60  # * 30 # 1 month
-INLINE_QUERY_POPULAR_CACHE_TIME = 24 * 60 * 60  # 1 day
+INLINE_QUERY_CACHE_TIME = 24 * 60 * 60  # 1 day
+INLINE_QUERY_POPULAR_CACHE_TIME = 1 * 60 * 60  # 1 hour
 logging.basicConfig(format='{levelname:8s} [{asctime}] {message}', style='{', level=logging.DEBUG)
 
 
