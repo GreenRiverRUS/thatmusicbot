@@ -8,4 +8,4 @@ services:
     env_file:
       - .env
     ports:
-      - '${CONTAINER_PORT}:8000'
+      - '127.0.0.1:${CONTAINER_PORT}:8000'
